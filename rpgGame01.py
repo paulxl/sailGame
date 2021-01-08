@@ -2,6 +2,7 @@
 
 inventory = []
 currentLocation = "WestOfMangrooveIsland"
+points = 50
 
 locations = {
     'WestOfMangrooveIsland': {
@@ -15,13 +16,18 @@ locations = {
     },
     'TwinIslands':{
         'north':'WestOfMangrooveIsland',
+        'west': 'VolcanoIsland',
     },
     'BigIsland':{
         'east': 'WestOfMangrooveIsland',
+        'south': 'VolcanoIsland',
     },
     'MangrooveIsland':{
         'west': 'WestOfMangrooveIsland',
     },
+    'ThreeTreeIsland': {
+        'north': 'VolcanoIsland',
+    }
 }
 
 def showInstructions():
@@ -39,7 +45,7 @@ Commands:
     Use the listed commands to navigate your way around the islands
     Looking for Pirates Treasure and trying not to get your ass kicked
     or fall upon too many mis-adventures.
-    If too many bad things happen to you: YOU LOOSE
+    If too many bad things happen to you: YOU LOOSE because you lost too many points
     If you find the treasure before too much mis-adventures, YOU WIN
     ''')
 
@@ -64,7 +70,11 @@ def showInitStatus():
     ''')
 
 def showStatus():
-
+    print('-----------------')
+    print('You are currently at:  ', currentLocation)
+    print('You inventory includes:  ', inventory)
+    print('You have this many points: ', points)
+    print('-----------------')
 
 
 
@@ -72,6 +82,24 @@ def showStatus():
 def begin():
     while True:
         showStatus()
+        # get the player's next 'move'
+        # .split() breaks it up into an list array
+        # eg typing 'go east' would give the list:
+        # ['go','east']
+        move = ''
+        while move == '':
+            move = input('>')
+            # split allows an items to have a space on them
+            # get golden key is returned ["get", "golden key"]
+            move = move.lower().split(" ", 1)
+
+        if move[0] == 'sail':
+            # check that they are allowed wherever they want to go
+            if move[1] in locations[currentLocation]:
+                # set the current location to the new location
+                currentLocation= locations[currentLocation][move[1]]
+
+
 
 def main():
     showInstructions()
