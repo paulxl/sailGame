@@ -2,7 +2,7 @@
 
 inventory = []
 currentLocation = "WestOfMangrooveIsland"
-points = 50
+POINTS = 50
 
 locations = {
     'WestOfMangrooveIsland': {
@@ -77,7 +77,9 @@ def showStatus():
     print('-----------------')
 
 
-
+def youLoose():
+    print("you lost too many points doing dumb moves and LOST")
+    print("Try again by restarting")
 
 def begin():
     while True:
@@ -98,7 +100,17 @@ def begin():
             if move[1] in locations[currentLocation]:
                 # set the current location to the new location
                 currentLocation= locations[currentLocation][move[1]]
+            else:
+                print("You sail in that direction for a while and find nothing.. ")
+                print("You loose 10 points for wasteing time and taking on water to your leaky scowl")
+                POINTS = POINTS - 10
+                if POINTS <= 0:
+                    youLoose()
 
+        if move[0] == 'see':
+            # let them see in that direction
+            if move[1] in locations[currentLocation]:
+                print("In that direction you see:  ", locations[currentLocation][move[1]])
 
 
 def main():
